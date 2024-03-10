@@ -7,13 +7,22 @@ let
 in rec {
   inherit pkgs;
 
-  agda = pkgs.agda.withPackages (p: ([
-    (p.mkDerivation {
+  agdaLib = mkDerivation:
+    mkDerivation {
       pname = "1lab";
       version = "1.0.0";
       src = ./.;
-    })
-  ]));
+      libraryName = "1lab";
+      libraryFile = "1lab.agda-lib";
+      everythingFile = "src/index.lagda.md";
+      meta = with pkgs.lib; {
+        description =
+          "A formalised, cross-linked reference resource for mathematics done in Homotopy Type Theory ";
+        homepage = src.meta.homepage;
+        license = licenses.agpl3;
+        platforms = platforms.unix;
+      };
+    };
 
   our-ghc = pkgs.labHaskellPackages.ghcWithPackages (ps: with ps; ([
     shake directory tagsoup
