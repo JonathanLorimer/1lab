@@ -19,4 +19,10 @@ in
         Agda = noJunk (super.callCabal2nixWithOptions "Agda" (thunkSource ./dep/Agda) "-f optimise-heavily -f debug" {});
       };
     });
+    haskellPackages = super.haskell.packages.ghc946.override (old: {
+      overrides = self: super: {
+        Agda = noJunk (super.callCabal2nixWithOptions "Agda" (thunkSource ./dep/Agda) "-f optimise-heavily -f debug" {});
+      };
+    });
+
   }
